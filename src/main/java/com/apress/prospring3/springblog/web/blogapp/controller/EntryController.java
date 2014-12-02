@@ -66,7 +66,7 @@ public class EntryController {
 		List<Entry> entries = entryService.findAll();
 		uiModel.addAttribute("entries", entries);
 		
-		logger.info("No. of blog entries: " + entries.size());
+//		logger.info("No. of blog entries: " + entries.size());
 		
 		return "blogs/list";
 	}
@@ -84,6 +84,9 @@ public class EntryController {
 	@RequestMapping(method = RequestMethod.POST)
     public String create(@Valid Entry entry, BindingResult bindingResult, Model uiModel, 
     		HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+		
+		System.out.println("===sub category-----------="+entry.getSubCategoryId());
+		
 		logger.info("Creating entry");
         if (bindingResult.hasErrors()) {
 			uiModel.addAttribute("message", new Message("error", messageSource.getMessage("entry_save_fail", new Object[]{}, locale)));
@@ -95,6 +98,7 @@ public class EntryController {
         redirectAttributes.addFlashAttribute("message", new Message("success", messageSource.getMessage("entry_save_success", new Object[]{}, locale)));
 
         logger.info("Entry id: " + entry.getId());
+        System.out.println("===sub category===="+entry.getSubCategoryId());
         entryService.save(entry);
         return "redirect:/blogs/" + UrlUtil.encodeUrlPathSegment(entry.getId().toString(), httpServletRequest);
     }
@@ -191,7 +195,9 @@ public class EntryController {
 		// Process order by
 		Sort sort = null;
 		String orderBy = sortBy;
-		if (orderBy != null && orderBy.equals("postDateString")) orderBy = "postDate";
+		if (orderBy != null && orderBy.equals("postDateString")) {
+			orderBy = "postDate";
+		}
 		
 		if (orderBy != null && order != null) {
 			if (order.equals("desc")) {

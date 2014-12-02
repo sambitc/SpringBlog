@@ -101,7 +101,8 @@
     <bean id="auditorAwareBean" class="com.apress.prospring3.springblog.auditor.AuditorAwareBean"/>
 
     <util:list id="obscenities">
-        <value>crap</value>
+        <value>fuck</value>
+        <value>fuck</value>
     </util:list>
     
 </beans>

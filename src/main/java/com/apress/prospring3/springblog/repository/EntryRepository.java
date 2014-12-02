@@ -18,15 +18,15 @@ import com.apress.prospring3.springblog.domain.Entry;
  * @author Clarence
  *
  */
-public interface EntryRepository extends PagingAndSortingRepository<Entry, Long> {
+public interface EntryRepository extends
+		PagingAndSortingRepository<Entry, Long> {
 
 	public List<Entry> findByCategoryId(String categoryId);
-	
+
 	@Query("select e from Entry e where e.subject like :subject and e.categoryId like :categoryId and e.postDate between :fromPostDate and :toPostDate")
 	public Page<Entry> findEntryByCriteria(@Param("subject") String subject,
-			                               @Param("categoryId") String categoryId, 
-			                               @Param("fromPostDate") DateTime fromPostDate, 
-			                               @Param("toPostDate") DateTime toPostDate,
-			                               Pageable pageable);
-	
+			@Param("categoryId") String categoryId,
+			@Param("fromPostDate") DateTime fromPostDate,
+			@Param("toPostDate") DateTime toPostDate, Pageable pageable);
+
 }
